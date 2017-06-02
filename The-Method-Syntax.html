@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The-Method-Syntax</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h2 id="linq-the-method-syntax">**LINQ – THE METHOD SYNTAX**</h2>
+
+<p>Choosing between these two approaches is purely a developer’s choice. Performance wise both are the same. The query syntax is comparatively easy to understand but offers less flexibility. The method syntax, on the contrary, is a little difficult to understand but offers great flexibility. It is possible to chain multiple queries using the method syntax and thus achieve maximum results in a single statement.</p>
+
+<p><strong>1. Employee Result where lastname is  Davolio</strong></p>
+
+<pre><code>            using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            {
+                  var employee = db.Employees.Where(p =&gt; p.LastName == "Davolio");
+  Console.WriteLine(employee);
+                Console.ReadKey();
+       }
+</code></pre>
+
+<p><strong>2.Get List of Employees  where TitleofCourtesy is Mr.</strong></p>
+
+<pre><code>    using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+    {
+         IEnumerable&lt;Employee&gt; employee = db.Employees
+                                                .Where(p =&gt; p.TitleOfCourtesy == "Mr.");
+        Console.ReadKey();
+</code></pre>
+
+<p>}</p>
+
+<p><strong>TIP</strong> <br>
+While using LINQ to Entities, it is important to understand when to use <strong>IEnumerable</strong> and <strong>IQueryable.</strong> If we use <strong>IEnumerable</strong>, the query will be executed immediately. If we use <strong>IQueryable</strong>, the query execution will be deferred until the application requests the enumeration.</p>
+
+<p>Now let’s see what should be considered while deciding whether to use <strong>IQueryable</strong> or <strong>IEnumerable</strong>. Using <strong>IQueryable</strong> gives you a chance to create a complex LINQ query using multiple statements without executing the query at the database level. The query gets executed only when the final LINQ query gets enumerated.              </p>
+
+<hr>
+
+<p><strong>3. GET ALL ROW OF EMPLOYEE TABLE</strong></p>
+
+<pre><code>using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+    {
+          var employee = db.Employee;
+        Console.ReadKey();
+     }
+</code></pre>
+
+<hr>
+
+<p><strong>4. Select Query</strong></p>
+
+<pre><code>        var employees = db.Employees.Where(p =&gt; p.LastName == "Davolio").Select(p =&gt; p.Employee1);
+        Console.WriteLine(employees);
+</code></pre>
+
+<p><strong>5.List of Employees</strong> </p>
+
+<pre><code> public class EmployeeModel
+    {
+        public int EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
+        public string TitleOfCourtesy { get; set; }
+    }
+
+using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            {
+                IQueryable&lt;EmployeeModel&gt; employee = db.Employees.Select
+                    (p =&gt; new EmployeeModel
+                    {
+                        EmployeeId = p.EmployeeID,
+                        EmployeeName = p.FirstName +p.LastName,
+                        TitleOfCourtesy = p.TitleOfCourtesy
+
+                    });
+                Console.WriteLine(employee);
+                Console.ReadKey();
+            }
+</code></pre>
+
+<p>The preceding code is essentially doing the same thing as in the previous query but uses the method syntax instead. Using projections with LINQ to Entities is very useful because it enables us to return complex types that contain data from multiple entities. Entity Framework will take care of creating the appropriate SQL query accordingly. <br>
+<strong>6.Grouping using LINQ to Entities</strong></p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+   var result = db.Employees.GroupBy
+                (employee =&gt; employee.Employer_ID)
+                .Select
+                (
+                      employeeGroup =&gt;
+                      new
+                      {
+                            EmployerID = employeeGroup.Key,
+                           EmployeeEntity = employeeGroup
+                      }
+                );
+}
+</code></pre>
+
+<p>The preceding code will group the Employee records by Employer_ID. The results will be returned as a projection that will create an anonymous object. The Employer_ID property of the result will contain the ID of the employer with which we have performed grouping. The EmployeeEntity property will contain a collection of Employees found for this EmployerID.</p>
+
+<hr>
+
+<p><strong>6.ORDER BY </strong></p>
+
+<pre><code>using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            {
+                var result = db.Employees.OrderBy(p =&gt; p.EmployeeID)
+                Console.ReadKey();
+            }
+</code></pre>
+
+<hr>
+
+<p><strong>7.Order By Desc</strong></p>
+
+<pre><code>using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            {
+                var result = db.Employees.OrderByDescending(p =&gt; p.EmployeeID)
+                Console.ReadKey();
+            }
+</code></pre>
+
+<hr>
+
+<p><strong>Aggregate operators with LINQ to Entities</strong> <br>
+Let’s now take a look at how we can use aggregate operators using LINQ to Entities. We will see how we can perform the following aggregate operations using LINQ to Entities:</p>
+
+<ol>
+<li>Count </li>
+<li>Sum </li>
+<li>Min </li>
+<li>Max </li>
+<li>Average</li>
+</ol>
+
+<p><strong>1. Count</strong></p>
+
+<pre><code> using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            {
+                var result = db.Employees.Where(p =&gt; p.TitleOfCourtesy == "Mr.").Count();
+                Console.WriteLine(result);
+                Console.ReadKey();
+            }
+</code></pre>
+
+<p><strong>2.Sum</strong></p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+   int sumOfSalaries = db.Employees
+                    .Where(employee =&gt; employee.Employer_ID == 4)
+                    .Select(employee =&gt; employee.Salary)
+                    .Sum();
+}
+</code></pre>
+
+<p><strong>3. Min</strong></p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+   int minimumSalary = db.Employees
+                .Where(employee =&gt; employee.Employer_ID == 4)
+                .Select(employee =&gt; employee.Salary)
+                .Min();
+}
+</code></pre>
+
+<p><strong>4.MAX</strong></p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+   int maximumSalary = db.Employees
+         .Where(employee =&gt; employee.Employer_ID == 4)
+         .Select(employee =&gt; employee.Salary)
+         .Max();
+}
+</code></pre>
+
+<p><strong>5. Average</strong></p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+    double averageSalary = db.Employees
+                .Where(employee =&gt; employee.Employer_ID == 4)
+                .Select(employee =&gt; employee.Salary)
+                .Average();
+}
+</code></pre>
+
+<hr>
+
+<p><strong>Partitioning/paging data using LINQ to Entities</strong></p>
+
+<ol>
+<li>Skip </li>
+</ol>
+
+<p><strong>1.Skip</strong></p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+   var employees = db.Employees
+         .OrderBy(employee =&gt; employee.ID)
+         .Skip(10);
+}
+</code></pre>
+
+<p><strong>2.Take</strong></p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+   var employees = db.Employees
+                .OrderBy(employee =&gt; employee.ID)
+                .Take(10);
+}
+</code></pre>
+
+<hr>
+
+<p><strong>IMPLEMENTING PAGING</strong> <br>
+    If we want to implement paging, we have to use Skip and Take in the same query. For example, if we want to retrieve the second page of the data, and each page shows 10 records, we have to skip the first 10 records and then fetch the next 10 records for the user:</p>
+
+<pre><code>using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+   var employees = db.Employees
+         .OrderBy(employee =&gt; employee.ID)
+         .Skip(10)
+         .Take(10);
+}
+</code></pre>
+
+<hr>
+
+<p><strong>Implementing join using LINQ to Entities</strong></p>
+
+<p>using (SampleDatabaseEntities db = new SampleDatabaseEntities()) <br>
+{ <br>
+   var employersList = db.Employers.GroupJoin <br>
+         ( <br>
+                db.Employees, <br>
+                employer =&gt; (Int32?)(employer.ID), <br>
+                employee =&gt; employee.Employer_ID, <br>
+                (employer, employeeGroup) =&gt; new <br>
+                { <br>
+                      EmployerName = employer.EmployerName, <br>
+                      EmployeesList = employeeGroup <br>
+                } <br>
+          ); <br>
+}</p>
+
+<pre><code>       The join or GroupJoin is the LINQ equivalent of SQL LEFT OUTER JOIN. This will always return all the elements of the entity collection that are to the left irrespective of whether or not the entity collection on the right-hand side of join contains any entities.     
+</code></pre>
+
+<hr>
+
+<p><strong>In the End we dicuss lazy loading and eager loading</strong></p></div></body>
+</html>

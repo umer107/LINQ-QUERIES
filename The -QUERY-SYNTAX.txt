@@ -1,0 +1,185 @@
+using LINQ.Data;
+using LINQ.Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LINQ
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var connection =
+                    System.Configuration.ConfigurationManager.
+                    ConnectionStrings["NORTHWNDEntities1"].ConnectionString;
+
+            Console.WriteLine("Connection String is {0}", connection);
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
+
+            //_____________________________________ADD ITEM INTO DATABASE _____________________________________________//\
+            Console.WriteLine("Insert Data in Entity FrameWork");
+            //using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            //{
+            //    Product product = db.Products.Find(1);
+
+            //    //Customer customer = db.Customers.FirstOrDefault(p => p.ContactTitle == "Owner");
+
+            //    //Customer customer = db.Customers.SingleOrDefault(p => p.ContactTitle == "Owner");
+
+            //    Customer cust = new Customer();
+            //    cust.CustomerID = "pp";
+            //    cust.CompanyName = "Followit";
+            //    //cust.ContactName = "MuhammadUmar";
+            //    //cust.ContactTitle = "Developer";
+            //    //cust.Address = "Lahore Cantt";
+            //    //cust.City = "Lahore";
+            //    //cust.Region = "Punjab";
+            //    //cust.PostalCode = "54000";
+            //    //cust.Country = "Pakistan";
+            //    //cust.Phone = "03213661980";
+
+            //    //Console.WriteLine("CustomerID" + cust.CustomerID.Length + "CompanyName" + cust.CompanyName.Length + "ContactName" + cust.ContactTitle.Length + "Address" + cust.Address.Length + "City" + cust.City.Length + "region" + cust.Region.Length);
+                
+                
+            //    db.Customers.Add(cust);
+            //    db.SaveChanges();
+                               
+            //}
+            //_____________________________________ADD ITEM INTO DATABASE _____________________________________________//
+            //_________________________________________________________________________________________________________//
+            //_____________________________________UPDATE DATA INTO DATABASE _____________________________________________//
+            //Console.WriteLine("\DatabaseUpdates");
+            //using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            //{
+            //    string CustomerID = "pp";
+            //    Customer cust = db.Customers.Find(CustomerID);
+            //    cust.ContactName = "M.Umar";
+            //    db.Entry(cust).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //}
+            //_____________________________________UPDATE DATA INTO DATABASE _____________________________________________//
+            //_________________________________________________________________________________________________________//
+            //_____________________________________DELETE DATA INTO DATABASE _____________________________________________//
+            //using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            //{
+            //    Console.WriteLine("------------DATA DELETED---------------");
+            //    string CustomerId = "pp";
+            //    Customer cus = db.Customers.Find(CustomerId);
+            //    db.Customers.Remove(cus);
+            //    db.SaveChanges();
+            //}
+            //_____________________________________DELETE DATA INTO DATABASE _____________________________________________//
+            //GetEmployeeByEmployeeId
+            //Program po = new Program();
+            //po.GetEmployeeByEmployeeId(1);
+
+            using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            {
+                Console.WriteLine("-------------------------LINQ Query syntax:-------------------------------------");
+                Console.WriteLine("----------------------GetALLRecordsFromTableEmployee----------------------");
+                Console.WriteLine("----------------------GetEmployeesAllRecord--------------------------------");
+                var GetEmployeesAllRecord = from d in db.Employees
+                                            select d;
+                Console.WriteLine(GetEmployeesAllRecord);
+                Console.WriteLine("_________________________________________________________________________________");
+                Console.WriteLine("----------------------Get those records where lastname is Davolio----------------------");
+                var GetEmployeeRecord = from d in db.Employees
+                                        where d.LastName == "Davolio"
+                                        select d;
+                Console.WriteLine(GetEmployeeRecord);
+                Console.WriteLine("_________________________________________________________________________________");
+                Console.WriteLine("The preceding code also retrieves the list of Employees with LastName as Singh using the method syntax.\n");
+                Console.WriteLine("----------------------GET LIST OF EMPLOYEES WHERE TITLE OF COURTESY IS MR ----------------------");
+                IEnumerable<Employee> listIEnumerbaleQuery = from d in db.Employees
+                                           where d.TitleOfCourtesy == "Mr"
+                                           select d;
+                Console.WriteLine(listIEnumerbaleQuery);
+                Console.WriteLine("_________________________________________________________________________________");
+                Console.WriteLine("----------------------GET ONLY SPECIFIC COLUMN-----------------------------------");
+                var SpecficColumnInEmployee = from d in db.Employees
+                                              where d.TitleOfCourtesy == "Mr"
+                                              select new
+                                              {
+                                                  EmployeeID = d.EmployeeID
+                                              };
+                Console.WriteLine(SpecficColumnInEmployee);
+                Console.WriteLine("_________________________________________________________________________________");
+                Console.WriteLine("----------------------GET ONLY SPECIFIC COLUMN (With defined model)-----------------------------------");
+                var SpecificColumnWithModel = from d in db.Employees
+                                              where d.TitleOfCourtesy == "Mr"
+                                              select new EmployeeModel
+                                              {
+                                                  EmployeeId = d.EmployeeID,
+                                                  EmployeeName = d.FirstName + d.LastName
+                                              };
+                Console.WriteLine(SpecificColumnWithModel);
+                Console.WriteLine("_________________________________________________________________________________");
+                Console.WriteLine("----------------------Grouping using LINQ to Entities-----------------------------------");
+                var groupByStatment = from employee in db.Employees
+                                      group employee by employee.TitleOfCourtesy
+                                          into employeeGroup
+                                          select new EmployeeModel
+                                          {
+                                              TitleOfCourtesy = employeeGroup.Key
+                                          };
+                Console.WriteLine(groupByStatment);
+                Console.WriteLine("_________________________________________________________________________________");
+                Console.WriteLine("----------------------Ordering using LINQ to Entities-----------------------------------");
+                var OrderByEmployee = from d in db.Employees
+                                      orderby  d.EmployeeID
+                                      select d;
+                Console.WriteLine(OrderByEmployee);
+                Console.WriteLine("_________________________________________________________________________________");
+                Console.WriteLine("------------------------Aggregate operators with LINQ to Entities-----------------");
+                Console.WriteLine("01.Count\n02.Sum\n03Min\n04Max\nAverage\n");
+                Console.WriteLine("COUNT\n");
+                Console.WriteLine("Lets Start with count\n");
+                var CountQuery = (from d in db.Employees
+                                  where d.EmployeeID == 4
+                                  select d).Count();
+                Console.WriteLine(CountQuery);
+                Console.WriteLine("_________________________________________________________________________________");
+                using (SampleDatabaseEntities db = new SampleDatabaseEntities())
+{
+                   var employersList = from employer in db.Employers
+                   join
+                  employee in db.Employees
+                   on
+                 employer.ID equals employee.Employer_ID into employeeGroup
+                select new
+                 {
+            EmployerName = employer.EmployerName,
+            EmployeesList = employeeGroup
+        };
+}
+            }
+
+            Console.ReadKey();
+
+        }
+
+        
+        public  Employee GetEmployeeByEmployeeId(int employeeId)
+        {
+            Employee emp = new Employee();
+            using (NORTHWNDEntities1 db = new NORTHWNDEntities1())
+            {
+                emp = db.Employees.Find(employeeId);
+                if (emp != null)
+                {
+                    return emp;
+                }
+
+            }
+            return emp;
+        }
+
+       
+    }
+   
+}
+
