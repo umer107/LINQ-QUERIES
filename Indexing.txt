@@ -1,0 +1,110 @@
+Published by Packt Publishing, 2015
+
+	1. Mastering Entity Framework (01:09 mins)
+		*  Table of Contents (09:12 mins)
+		*  Mastering Entity Framework (01:09 mins)
+		*  Credits (01:09 mins)
+		*  About the Author (02:18 mins)
+		*  About the Reviewers (02:18 mins)
+		*  www.PacktPub.com (01:09 mins)
+		*  Preface (02:18 mins)
+		* 
+			*  What you need for this book (01:09 mins)
+			*  Who this book is for (01:09 mins)
+			*  Conventions (01:09 mins)
+			*  Reader feedback (01:09 mins)
+			*  Customer support (01:09 mins)
+
+		*  1. Introduction to Entity Framework (04:36 mins)
+		* 
+			*  Development styles and different Entity Framework approaches (02:18 mins)
+			*  Comparing the development styles (01:09 mins)
+			*  Entity Framework Database First approach (10:21 mins)
+			*  Entity Framework Model First approach (08:03 mins)
+			*  Entity Framework Code First approach (03:27 mins)
+			*  Performing CRUD operations using Entity Framework (06:54 mins)
+			*  Choosing persistence approaches (01:09 mins)
+			*  Summary (01:09 mins)
+
+		*  2. Entity Framework DB First – Managing Entity Relationships (04:36 mins)
+		* 
+			*  Creating the Entity model (02:18 mins)
+			*  Modeling a one-to-many relationship (02:18 mins)
+			*  Modeling a one-to-one relationship using Entity Framework (02:18 mins)
+			*  Modeling a many-to-many relationship using Entity Framework (03:27 mins)
+			*  Using navigation properties for data access (05:45 mins)
+			*  Entity Framework – behind the scenes (02:18 mins)
+			*  Summary (01:09 mins)
+
+		*  3. Entity Framework DB First – Performing Model Validations (10:21 mins)
+		* 
+			*  Model validations using data annotations (11:30 mins)
+			*  Summary (01:09 mins)
+
+		*  4. Entity Framework DB First – Inheritance Relationships between Entities (01:09 mins)
+		* 
+			*  The Table per Type inheritance (08:03 mins)
+			*  The Table per Class Hierarchy inheritance (10:21 mins)
+			*  The Table per Concrete Class inheritance (06:54 mins)
+			*  Choosing the inheritance strategy (01:09 mins)
+			*  Summary (01:09 mins)
+
+		*  5. Entity Framework DB First – Using Views, Stored Procedures, and Functions (01:09 mins)
+		* 
+			*  Using Entity Framework with views (04:36 mins)
+			*  Using Entity Framework with stored procedures (08:03 mins)
+			*  Using Entity Framework with functions (05:45 mins)
+			*  Summary (01:09 mins)
+
+		*  6. Entity Framework Code First – Domain Modeling and Managing Entity Relationships (02:18 mins)
+		* 
+			*  Understanding the Code First conventions and configurations (01:09 mins)
+			*  Implementing Entity Framework Code First (05:45 mins)
+			*  Managing Entity relationships using the Code First approach (14:57 mins)
+			*  Inheritance with the Entity Framework Code First approach (14:57 mins)
+			*  Summary (01:09 mins)
+
+		*  7. Entity Framework Code First – Managing Database Creation and Seeding Data (04:36 mins)
+		* 
+			*  Managing database initialization (03:27 mins)
+			*  Seeding data (04:36 mins)
+			*  Summary (01:09 mins)
+
+		*  8. Querying the Entity Data Model – LINQ to Entities (03:27 mins)
+		* 
+			*  Querying data using LINQ to Entities (03:27 mins)
+			*  Using LINQ to Entities – an example-based approach (21:51 mins)
+			*  Lazy loading and eager loading (03:27 mins)
+			*  Summary (01:09 mins)
+
+		*  9. Querying the Object Model – Entity SQL (02:18 mins)
+		* 
+			*  Understanding EntityConnection (18:24 mins)
+			*  Using Entity SQL with EntityCommand (03:27 mins)
+			*  Summary (01:09 mins)
+
+		*  10. Managing Concurrency Using Entity Framework (05:45 mins)
+		* 
+			*  Implementing optimistic concurrency using Entity Framework (14:57 mins)
+			*  Entity Framework and pessimistic concurrency (01:09 mins)
+			*  Summary (01:09 mins)
+
+		*  11. Managing Transactions Using Entity Framework (01:09 mins)
+		* 
+			*  Setting up the test environment (01:09 mins)
+			*  Entity Framework's default transaction handling (03:27 mins)
+			*  Managing transactions using Entity Framework 6 (04:36 mins)
+			*  Choosing the appropriate transaction management (01:09 mins)
+			*  Summary (01:09 mins)
+
+		*  12. Implementing a Small Blogging Platform Using Entity Framework (02:18 mins)
+		* 
+			*  Visualizing our database design (02:18 mins)
+			*  Creating the Entity Data Model (10:21 mins)
+			*  Performing data access (26:27 mins)
+			*  Using other Entity Framework approaches (02:18 mins)
+			*  Summary (01:09 mins)
+
+		*  Index (16:06 mins)
+
+
